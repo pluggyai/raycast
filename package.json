@@ -13,14 +13,33 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "index",
+      "name": "search-connectors",
       "title": "Search Connectors",
       "description": "Search over connectors and check status",
       "mode": "view"
     }
   ],
+  "preferences": [
+    {
+      "name": "clientId",
+      "type": "textfield",
+      "required": true,
+      "title": "Pluggy Client ID",
+      "description": "Enter your Client ID",
+      "placeholder": "af5ba067-2f1c-456d-8e36-903112614cb0"
+    },
+    {
+      "name": "clientSecret",
+      "type": "textfield",
+      "required": true,
+      "title": "Pluggy Client Secret",
+      "description": "Enter your Client Secret",
+      "placeholder": "e2062b03-6bb9-4061-820a-4da6ec960221"
+    }
+  ],
   "dependencies": {
-    "@raycast/api": "^1.55.2"
+    "@raycast/api": "^1.55.2",
+    "pluggy-sdk": "^0.33.1"
   },
   "devDependencies": {
     "@raycast/eslint-config": "1.0.5",
