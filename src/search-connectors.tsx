@@ -1,5 +1,6 @@
 import { Action, ActionPanel, Detail, List } from "@raycast/api";
 import { Connector } from "pluggy-sdk";
+import { PLUGGY_DEMO_URL } from "./constants";
 import { useConnectors } from "./hooks";
 
 function getConnectorSubtitle(status?: string): string | undefined {
@@ -28,6 +29,10 @@ ${JSON.stringify(connector, null, 2)}
 export default function Command() {
   const connectors = useConnectors();
 
+  const ActionConnectItem = ({ connector }: { connector: Connector }) => (
+    <Action.OpenInBrowser title="Connect Item" url={`${PLUGGY_DEMO_URL}?connector_id=${connector.id}`} />
+  );
+
   return (
     <List isLoading={connectors.length === 0}>
       {connectors
@@ -47,6 +52,7 @@ export default function Command() {
                       markdown={connectorToMarkdown(connector)}
                       actions={
                         <ActionPanel>
+                          <ActionConnectItem connector={connector} />
                           <Action.CopyToClipboard
                             title="Copy Connector JSON"
                             content={JSON.stringify(connector, null, 2)}
@@ -56,7 +62,7 @@ export default function Command() {
                     />
                   }
                 />
-                {/* <Action.OpenInBrowser title="Connect account" url={""} /> */}
+                <ActionConnectItem connector={connector} />
               </ActionPanel>
             }
           />

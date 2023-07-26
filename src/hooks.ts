@@ -1,20 +1,26 @@
-import { getPreferenceValues } from "@raycast/api";
+import { useFetch } from "@raycast/utils";
 import { Connector, PluggyClient } from "pluggy-sdk";
 import { useEffect, useState } from "react";
-import { Preferences } from "./config";
+import { PLUGGY_CONNECT_TOKEN_URL } from "./constants";
+
+export function useConnectToken(): { isLoading: boolean; connectToken?: string } {
+  const { isLoading, data } = useFetch<{ accessToken?: string }>(`${PLUGGY_CONNECT_TOKEN_URL}`);
+  return { isLoading, connectToken: data?.accessToken };
+}
 
 export function useConnectors(): Connector[] {
-  const { clientId, clientSecret } = getPreferenceValues<Preferences>();
+  const { connectToken } = useConnectToken();
   const [connectors, setConnectors] = useState<Connector[]>([]);
 
   useEffect(() => {
-    if (!clientId || !clientSecret) {
+    if (!connectToken) {
       return;
     }
 
-    const client = new PluggyClient({ clientId, clientSecret });
+    const client = new PluggyClient({ clientId: "placeholder", clientSecret: "placeholder" });
+    client["apiKey"] = connectToken;
     client.fetchConnectors().then((connectors) => setConnectors(connectors.results));
-  }, [clientId, clientSecret]);
+  }, [connectToken]);
 
   return connectors;
 }
