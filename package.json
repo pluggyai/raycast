@@ -5,7 +5,6 @@
   "description": "Connect an account in a single command. Search connectors and check status.",
   "icon": "command-icon.png",
   "author": "fmiras",
-  "owner": "pluggy",
   "categories": [
     "Developer Tools",
     "Finance"
